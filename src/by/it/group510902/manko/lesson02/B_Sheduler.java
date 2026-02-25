@@ -1,6 +1,7 @@
 package by.it.group510902.manko.lesson02;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 /*
 Даны интервальные события events
@@ -25,20 +26,20 @@ public class B_Sheduler {
     }
 
     List<Event> calcStartTimes(Event[] events, int from, int to) {
-        //Events - события которые нужно распределить в аудитории
-        //в период [from, int] (включительно).
-        //оптимизация проводится по наибольшему числу непересекающихся событий.
-        //Начало и конец событий могут совпадать.
-        List<Event> result;
-        result = new ArrayList<>();
-        //ваше решение.
-
-
-        return result;          //вернем итог
+        List<Event> result = new ArrayList<>();
+        Arrays.sort(events);
+        double current = from;
+        for(int i = 0; i < events.length; i++){
+            if(current <= events[i].start && events[i].stop <= to){
+                current = events[i].stop;
+                result.add(events[i]);
+            }
+        }
+        return result;
     }
 
     //событие у аудитории(два поля: начало и конец)
-    static class Event {
+    static class Event implements Comparable<Event> {
         int start;
         int stop;
 
@@ -50,6 +51,15 @@ public class B_Sheduler {
         @Override
         public String toString() {
             return "(" + start + ":" + stop + ")";
+        }
+
+        @Override
+        public int compareTo(Event other) {
+            if (start < other.start) return -1;
+            if (start > other.start) return 1;
+            if (stop < other.stop) return -1;
+            if (stop > other.stop) return 1;
+            return 0;
         }
     }
 }
