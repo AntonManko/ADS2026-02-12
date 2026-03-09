@@ -2,6 +2,8 @@ package by.it.group510902.manko.lesson03;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 // Lesson 3. B_Huffman.
@@ -55,10 +57,24 @@ public class B_Huffman {
         Scanner scanner = new Scanner(inputStream);
         Integer count = scanner.nextInt();
         Integer length = scanner.nextInt();
+        scanner.nextLine();
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! НАЧАЛО ЗАДАЧИ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
         //тут запишите ваше решение
-
-
+        Map<String, Character> mp = new HashMap<>();
+        for(int i = 0; i < count; i++){
+            String line = scanner.nextLine();
+            String[] parts = line.split(": ");
+            char symbol = parts[0].charAt(0);
+            mp.put(parts[1], symbol);
+        }
+        String current = "", str = scanner.nextLine();
+        for(int i = 0; i < length; i++){
+            current = current + str.charAt(i);
+            if(mp.containsKey(current)){
+                result.append(mp.get(current));
+                current = "";
+            }
+        }
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! КОНЕЦ ЗАДАЧИ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
         return result.toString(); //01001100100111
     }
